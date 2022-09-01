@@ -97,7 +97,7 @@ public class Main {
                     this.assets.add(asset);
                 }
             }
-            reader.close();
+            reader.close(); //727538732
         }
     }
 }
