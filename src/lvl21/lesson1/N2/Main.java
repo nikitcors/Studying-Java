@@ -41,6 +41,7 @@ public class Main {
         } catch (Exception e) {
             //e.printStackTrace();
             System.out.println("Oops, something wrong with save/load method");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -51,7 +52,7 @@ public class Main {
             //implement this method - реализуйте этот метод
             PrintWriter writer = new PrintWriter(outputStream);
 
-            String isUsersPresent = users.isEmpty() ? "Yes" : "No";
+            String isUsersPresent = !users.isEmpty() ? "Yes" : "No";
             writer.println(isUsersPresent);
 
             if (!users.isEmpty()){
@@ -59,7 +60,8 @@ public class Main {
                      users) {
                     writer.println(String.format("User: %s %s %s %s %s",
                             currentUser.getFirstName(),currentUser.getLastName(),
-                            currentUser.getBirthDate(), currentUser.isMale() + "",
+                            "" + currentUser.getBirthDate().getTime(),
+                            currentUser.isMale() + "",
                             currentUser.getCountry().name()));
                 }
             }
@@ -69,18 +71,20 @@ public class Main {
 
         public void load(InputStream inputStream) throws Exception {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
+            users = new ArrayList<>();
             String isUserPreasent = reader.readLine();
             if (isUserPreasent.equals("Yes")){
                 String currentUser = reader.readLine();
                 while (currentUser != null){
                     User currenUserObj = new User();
                     String[] currentUserArr = currentUser.split(" ");
-                    currenUserObj.setFirstName(currentUserArr[0]);
-                    currenUserObj.setLastName(currentUserArr[1]);
-                    currenUserObj.setBirthDate(new Date(currentUserArr[2]));
-                    currenUserObj.setMale(Boolean.parseBoolean(currentUserArr[3]));
-                    currenUserObj.setCountry(User.Country.valueOf(currentUserArr[4]));
+                    currenUserObj.setFirstName(currentUserArr[1]);
+                    currenUserObj.setLastName(currentUserArr[2]);
+                    currenUserObj.setBirthDate(new Date(Long.parseLong(currentUserArr[3])));
+                    currenUserObj.setMale(Boolean.parseBoolean(currentUserArr[4] ));
+                    currenUserObj.setCountry(User.Country.valueOf(currentUserArr[5]));
+                    currentUser = reader.readLine();
+                    users.add(currenUserObj);
                 }
             }
         }
