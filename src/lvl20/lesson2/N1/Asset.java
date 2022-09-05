@@ -1,4 +1,4 @@
-package lvl21.lesson2.N1;
+package lvl20.lesson2.N1;
 
 public class Asset {
     public Asset(String name) {

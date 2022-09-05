@@ -1,61 +1,59 @@
 package lvl21.lesson3.N3;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.List;
-
 public class Main {
-    public static class Person implements Externalizable {
-        private String firstName;
-        private String lastName;
-        private int age;
-        private Person mother;
-        private Person father;
-        private List<Person> children;
+    public static class A implements Cloneable {
+        private int i;
+        private int j;
 
-        public Person(String firstName, String lastName, int age) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
+        public A(int i, int j) {
+            this.i = i;
+            this.j = j;
         }
 
-        public Person (){}
-
-        public void setMother(Person mother) {
-            this.mother = mother;
+        public int getI() {
+            return i;
         }
 
-        public void setFather(Person father) {
-            this.father = father;
-        }
-
-        public void setChildren(List<Person> children) {
-            this.children = children;
-        }
-
-        @Override
-        public void writeExternal(ObjectOutput out) throws IOException {
-            out.writeObject(mother);
-            out.writeObject(father);
-            out.writeChars(firstName);
-            out.writeChars(lastName);
-            out.writeInt(age);
-            out.writeObject(children);
-        }
-
-        @Override
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-            firstName = in.readLine();
-            lastName = in.readLine();
-            father = (Person)in.readObject();
-            mother = (Person)in.readObject();
-            age = in.readInt();
-            children = (List)in.readObject();
+        public int getJ() {
+            return j;
         }
     }
-    public static void main(String[] args)  {
+
+    public static class B extends A {
+        private String name;
+
+        public B(int i, int j, String name) {
+            super(i, j);
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            throw new CloneNotSupportedException();
+        }
+    }
+
+    public static class C extends B implements Cloneable {
+        public C(int i, int j, String name) {
+            super(i, j, name);
+        }
+
+        @Override
+        protected C clone() throws CloneNotSupportedException {
+            int i = getI();
+            int j = getJ();
+            String name = getName();
+
+            return new C(i, j, name);
+        }
+    }
+
+    public static void main(String[] args) {
+
     }
 }
 

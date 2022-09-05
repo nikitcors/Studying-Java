@@ -1,10 +1,4 @@
-package lvl21.lesson1.N1;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package lvl20.lesson1.N5;
 
 public class Asset {
     public Asset(String name) {
@@ -47,5 +41,4 @@ public class Asset {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
-
 }

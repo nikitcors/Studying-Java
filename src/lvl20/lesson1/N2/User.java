@@ -1,4 +1,4 @@
-package lvl21.lesson2.N2;
+package lvl20.lesson1.N2;
 
 import java.util.Date;
 
@@ -50,7 +50,7 @@ public class User {
     }
 
     public static enum Country {
-        UKRAINE("Ukraine"),
+        BELARUS("Belarus"),
         RUSSIA("Russia"),
         OTHER("Other");
 
@@ -63,5 +63,30 @@ public class User {
         public String getDisplayedName() {
             return this.name;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (isMale != user.isMale) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (birthDate != null ? !birthDate.equals(user.birthDate) : user.birthDate != null) return false;
+        return country == user.country;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+        result = 31 * result + (isMale ? 1 : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        return result;
     }
 }

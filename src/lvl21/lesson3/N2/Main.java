@@ -1,46 +1,46 @@
 package lvl21.lesson3.N2;
 
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 public class Main {
-
-    public static String greeting = "Hello world";
-
-    /**
-     * OutputToConsole is the inner base class for improving your attentiveness.
-     * An OutputToConsole object encapsulates the information needed
-     * for the displaying [greeting] variable to the console.
-     *
-     */
-    public static class OutputToConsole implements Externalizable {
-        private int counter;
-
-        /**
-         * @param out A stream for an externalization
-         * @throws java.io.IOException
-         */
-
-        @Override
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-            counter = in.readInt();
+    public static void main(String[] args) {
+        Tree tree = new Tree("willow", new String[]{"s1", "s2", "s3", "s4"});
+        Tree clone = null;
+        try {
+            clone = tree.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
 
-        public void printMessage() {
-            for (int i = 0; i < counter; i++) {
-                System.out.println(greeting);
-            }
+        System.out.println(tree);
+        System.out.println(clone);
+
+        System.out.println(tree.branches);
+        System.out.println(clone.branches);
+    }
+
+    public static class Plant{
+        private String name;
+
+        public Plant(String name) {
+            this.name = name;
         }
 
-        @Override
-        public void writeExternal(ObjectOutput out) throws IOException {
-            out.writeInt(counter);
+        public String getName() {
+            return name;
         }
     }
-    public static void main(String[] args)  {
 
+    public static class Tree extends Plant implements Cloneable{
+        private String[] branches;
+        public Tree(String name, String[] branches) {
+            super(name);
+            this.branches = branches;
+        }
+
+        @Override
+        protected Tree clone() throws CloneNotSupportedException {
+            Tree newTree = new Tree(this.getName(),this.branches);
+            return newTree;
+        }
     }
+
 }
